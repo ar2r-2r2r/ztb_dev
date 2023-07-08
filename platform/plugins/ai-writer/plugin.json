@@ -1,0 +1,9 @@
+{
+    "name": "AI Writer",
+    "namespace": "Botble\\AIWriter\\",
+    "provider": "Botble\\AIWriter\\Providers\\AIWriterServiceProvider",
+    "author": "The Sky",
+    "url": "https://thesky9.com",
+    "version": "1.0",
+    "description": "AI Writer, Content Generator & Writing Assistant Tools."
+}
