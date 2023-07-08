@@ -84,8 +84,8 @@ return [
             $theme->asset()->container('footer')->usePath()->add('jquery.counterup', 'js/vendor/counterup.js', ['jquery']);
             $theme->asset()->container('footer')->usePath()->add('theia', 'js/vendor/jquery.theia.sticky.js', ['jquery']);
             $theme->asset()->container('footer')->usePath()->add('lazyload', 'js/vendor/lazyload.min.js');
+            $theme->asset()->container('footer')->usePath()->add('script', 'js/script.js', ['jquery'], [], $version);
             $theme->asset()->container('footer')->usePath()->add('ztb_scripts', 'js/ztb_scripts.js');
-
             if (function_exists('shortcode')) {
                 $theme->composer(['page', 'post'], function (\Botble\Shortcode\View\View $view) {
                     $view->withShortcodes();
