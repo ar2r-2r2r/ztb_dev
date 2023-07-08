@@ -1,0 +1,8 @@
+{
+    "name": "ZTB-News",
+    "namespace": "Theme\\UltraNews\\",
+    "description": "ZTB - news site.",
+    "author": "Mukatay",
+    "version": "2.7.0",
+    "required_plugins": []
+}
