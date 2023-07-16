@@ -29,7 +29,8 @@
 
     // Off canvas sidebar
     var OffCanvas = function () {
-        $("#off-canvas-toggle").on("click", function () {
+        $(".off-canvas-toggle").on("click", function () {
+            console.log('open')
             $("body").toggleClass("canvas-opened");
         });
 

@@ -11,6 +11,33 @@ app()->booted(function () {
     ThemeSupport::registerYoutubeShortcode();
 
     if (is_plugin_active('blog')) {
+
+        add_shortcode('L_post_var1', __('L_post_var1'), __('L Post var 1'), function ($shortcode){
+            $attributes = $shortcode->toArray();
+            $queryPosts = [
+                'categories' => $attributes['categories'] ?? '',
+                'categories_exclude' => $attributes['categories_exclude'] ?? '',
+                'include' => $attributes['include'] ?? '',
+                'exclude' => $attributes['exclude'] ?? '',
+                'limit' => $attributes['limit'] ? (int)$attributes['limit'] : 4,
+                'order_by' => $attributes['order_by'] ?? 'updated_at',
+                'order' => $attributes['order'] ?? 'desc',
+            ];
+            $title = $attributes['title'] ?? '';
+            $subtitle = $attributes['subtitle'] ?? '';
+
+            $posts = query_post($queryPosts);
+
+            return Theme::partial('shortcodes.ztb_custom.L_post_var1', compact('posts', 'title', 'subtitle'));
+
+        });
+
+        shortcode()->setAdminConfig('L_post_var1', function ($attributes) {
+            return Theme::partial('shortcodes.ztb_custom.L_post_var1-admin-config', compact('attributes'));
+        });
+
+
+
         add_shortcode('posts-listing', __('Posts listing'), __('Add posts listing'), function ($shortcode) {
             $limit = $shortcode->limit ? (int)$shortcode->limit : 12;
             $layout = $shortcode->layout ?: 'default';

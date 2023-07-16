@@ -15,7 +15,7 @@
 
 <div class="d-flex flex-row switcher">
 <label class="changeColorThemeLabel switch" >
-    <input type="checkbox" hidden onchange="colorThemeHandler(this.checked)" ></input>
+    <input id="theme_switcher" type="checkbox" hidden onchange="colorThemeHandler(this.checked)" ></input>
     <span class="slider round">
     </span>
 </label>
