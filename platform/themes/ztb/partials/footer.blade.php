@@ -10,6 +10,7 @@
                          alt="{{ setting('site_title') }}">
                     <div class="row" id="text-item-footer_main">“ZTB NEWS” MEDIA HOLDING</div>
                     <div class="row" id="text-item-footer_phone"> +7 (727) 377-33-33</div>
+                    <div class="row justify-content-center">     {!! Theme::partial('components.sidebar-social') !!}</div>
                 </div>
 
                 <div class="col-lg-1 mb-30 footer_vertical_line">
@@ -18,30 +19,12 @@
                     </svg>
                 </div>
 
-{{--                <div class="col-lg-3 col-md-6 mb-lg-0 mb-30">--}}
-{{--                    <ul>--}}
-{{--                        @foreach(get_popular_categories(5) as $category)--}}
-{{--                            <li class="footer-item_category">--}}
-{{--                                <a href="{{ $category->url }}">{{ $category->name }}</a>--}}
-{{--                            </li>--}}
-{{--                        @endforeach--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-
-
-                <div class="col-lg-3 col-md-6 mb-lg-0 ">
                     {!! dynamic_sidebar('footer_sidebar_1') !!}
-                </div>
 
-                <div class="col-lg-3 col-md-6 mb-lg-0 mb-30">
                     {!! dynamic_sidebar('footer_sidebar_2') !!}
-                </div>
 
-                <div class="col-lg-3 col-md-6">
                     {!! dynamic_sidebar('footer_sidebar_3') !!}
-                </div>
 
-                <div class="col-lg-3 col-md-6">
                     {!! dynamic_sidebar('footer_sidebar_4') !!}
                 </div>
             </div>

@@ -111,6 +111,9 @@
             });
         });
 
+
+
+
         // post-carausel-1-items
         $(".post-carausel-1-items").each(function (index, item) {
             let dataSlider = {
@@ -118,9 +121,9 @@
                 infinite: true,
                 speed: 1000,
                 arrows: true,
-                slidesToShow: 4,
+                slidesToShow: 1,
                 slidesToScroll: 1,
-                autoplay: true,
+                autoplay: false,
                 loop: true,
                 adaptiveHeight: true,
                 cssEase: "linear",
@@ -130,24 +133,24 @@
                     {
                         breakpoint: 1024,
                         settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 4,
-                            infinite: true,
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            infinite: false,
                             dots: false
                         }
                     },
                     {
                         breakpoint: 991,
                         settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3
+                            slidesToShow: 1,
+                            slidesToScroll: 1
                         }
                     },
                     {
                         breakpoint: 480,
                         settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
+                            slidesToShow: 1,
+                            slidesToScroll: 1
                         }
                     }
                 ]

@@ -1,20 +1,19 @@
 <div class="container">
 
-    <div class="header-back-default">
-        <div class="back-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="5" height="12" viewBox="0 0 5 12" fill="#828792">
-                <path d="M5 0L5 10L4.37114e-07 5L5 0Z" fill="#828792"/>
-            </svg>
+    <div class="header-inline-center-content">
+        <div class="header-back-default">
+            <div class="back-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="5" height="12" viewBox="0 0 5 12" fill="#828792">
+                    <path d="M5 0L5 10L4.37114e-07 5L5 0Z" fill="#828792"/>
+                </svg>
+            </div>
+            <div class="back-item text">
+                <a href="" onclick="javascript:history.back();return false;">Назад</a>
+            </div>
         </div>
-        <div class="back-item text">
-            <a href="" onclick="javascript:history.back();return false;">Назад</a>
-        </div>
-    </div>
 
-
-    <div class="row">
-         <div class="col-lg-12">
-            <div class="header-default-item">
+        <div class="dl-flex flex-column w-100">
+            <div class="header-default-item-center-content">
                 @php $category = $post->categories->first(); @endphp
                 @if ($category)
                     <div class="default_category">
@@ -23,7 +22,7 @@
                         </a>
                     </div>
                 @endif
-                <div class="post-title-header-default" style="max-width: 100%;">
+                <div class="post-title-header-default">
                     <a href="{{ get_external_link($post) }}" {{ is_external_link($post) ? 'target="_blank"' : '' }}>{{ $post->name }}</a>
                 </div>
 
@@ -34,10 +33,18 @@
                     <span class="post-on">{{ convert_date_to_ru($post->created_at->format('j.m.Y, H:m')) }}</span>
 
                 </div>
+
+                <div class="w-100">
+                    <figure class="single-thumnail img-hover-slide mb-0 "
+                            style="background-image: url({{ RvMedia::getImageUrl($post->image) }})">
+                    </figure>
+                </div>
+
             </div>
         </div>
-
     </div>
+
+
 
 </div>
 

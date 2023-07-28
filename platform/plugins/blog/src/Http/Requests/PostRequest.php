@@ -17,6 +17,7 @@ class PostRequest extends Request
             'content' => 'nullable|string',
             'tag' => 'nullable|string',
             'categories' => 'required|array',
+            'views'=>'required',
             'status' => Rule::in(BaseStatusEnum::values()),
         ];
 
@@ -25,7 +26,6 @@ class PostRequest extends Request
         if (count($postFormats) > 1) {
             $rules['format_type'] = Rule::in(array_keys($postFormats));
         }
-
         return $rules;
     }
 }

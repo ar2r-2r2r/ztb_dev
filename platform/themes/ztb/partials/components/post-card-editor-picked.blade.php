@@ -17,7 +17,8 @@
         </a>
     </div>
     <div class="entry-meta meta-1 font-small color-grey mt-10 pr-5 pl-5">
-        <span class="post-on">{{ $post->created_at->format(post_date_format()) }}</span>
-        <span class="hit-count has-dot">{{ number_format($post->views) . ' ' . __('views') }}</span>
+        <span class="post-on">{{  convert_date_to_ru($post->created_at->format('j.m.Y, H:m')) }}</span>
     </div>
+
+    
 </div>

@@ -10,9 +10,9 @@
     $videoLink = MetaBox::getMetaData($post, 'video_link', true);
     $videoEmbedCode = MetaBox::getMetaData($post, 'video_embed_code', true);
     $videoUploadId = MetaBox::getMetaData($post, 'video_upload_id', true);
-    if ($videoLink || $videoUploadId) {
-        $singleLayout = 'default';
-    }
+//    if ($videoLink || $videoUploadId) {
+//        $singleLayout = 'default';
+//    }
 
     if (is_plugin_active('pro-posts')) {
         Theme::asset()->container('footer')->usePath(false)->add('favorite-post', 'vendor/core/plugins/pro-posts/js/favorite-posts.js');
@@ -29,18 +29,62 @@
             @break;
 
         @case('inline')
-            {!! Theme::partial('components.single.headers.inline', compact('post', 'totalComment')) !!}
+            {!! Theme::partial('components.single.headers.inline', compact('post', 'totalComment','videoLink', 'videoEmbedCode', 'videoUploadId')) !!}
             @break;
+
+        @case('inline-full')
+            {!! Theme::partial('components.single.headers.inline-full', compact('post', 'totalComment')) !!}
+            @break;
+
+        @case('inline-center')
+                {!! Theme::partial('components.single.headers.inline-center', compact('post', 'totalComment')) !!}
+            @break;
+
     @endswitch
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-12 col-sm-12">
+            @if($singleLayout != 'inline-center')
+            <div class="col-lg-7 col-md-12 col-sm-12">
+            @else
+            <div class="d-flex flex-column align-items-center content_center">
+            @endif
                 @if($singleLayout == 'default' || empty($singleLayout))
                     {!! Theme::partial('components.single.headers.default', compact('post', 'totalComment', 'videoLink', 'videoEmbedCode', 'videoUploadId')) !!}
                 @endif
 
                 <div class="single-excerpt">
+                    @if($singleLayout=='inline')
+                        <div class="video-player">
+                            @if($videoLink)
+                                <div class="embed-responsive embed-responsive-16by9 mb-30">
+                                    <iframe class="embed-responsive-item" src="{{ $videoLink }}" allowfullscreen></iframe>
+                                </div>
+                            @elseif($videoUploadId)
+                                @php $videoLink = RvMedia::getImageUrl($videoUploadId); @endphp
+                                <video id="player" playsinline controls>
+                                    <source src="{{ $videoLink }}"
+                                            type="video/mp4">
+                                    <source src="{{ $videoLink }}"
+                                            type="video/webm">
+                                </video>
+                            @else
+                                <figure class="single-thumnail">
+                                    <div class="border-radius-5">
+                                        <div class="slider-single text-center">
+                                            <img class="border-radius-10 lazy"
+                                                 src="{{ RvMedia::getImageUrl($post->image) }}"
+                                                 data-src="{{ RvMedia::getImageUrl($post->image, 'large', false, RvMedia::getDefaultImage()) }}"
+                                                 src="{{ RvMedia::getImageUrl(theme_option('img_loading')) }}"
+                                                 loading="lazy"
+                                                 style="width: 100%;"
+                                                 alt="{{ $post->name }}">
+                                        </div>
+                                    </div>
+                                </figure>
+                            @endif
+                        </div>
+                    @endif
                     <p class="font-large">{!! clean($post->description) !!}</p>
                 </div>
                 <div class="entry-main-content wow fadeIn animated">
@@ -112,20 +156,76 @@
                         @break
                 @endswitch
 
-                @php $relatedPosts = get_related_posts($post->id, 3); @endphp
+                    @php $featuredPosts = get_featured_posts(4); @endphp
+                    @if ($featuredPosts->count() > 0)
+                        <div class="row post_slider_razdel">
+                            <div class="d-flex left_razdel_container">
+                                <span class="title_slider" style="margin-right: 0px;">Другие новости</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M10 17V7L15 12L10 17Z" fill="#1B1D21"/>
+                                </svg>
+                            </div>
 
-                @if ($relatedPosts->count() > 0)
-                    {!! Theme::partial('components.single.related-posts', ['relatedPosts' => $relatedPosts ]) !!}
-                @endif
+                            <div class="line_razdel">
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="widget-area">
+                            <div class="sidebar-widget widget-taber mb-30">
+                                <div class="widget-taber-content">
+
+                                    <!--Tab Recent-->
+                                    <div class="tab-pane fade show active" id="nav-popular" role="tabpanel"
+                                         aria-labelledby="nav-recent-tab">
+                                        <div class="post-block-list post-module-1">
+                                            <ul class="list-post right_widget">
+                                                @foreach($featuredPosts as $post)
+                                                    <li class="mb-30 w-100">
+                                                        <div class="d-flex">
+
+                                                            <div class="post-content media-body widget_right_body">
+                                                                <div class="post-title another_posts_wg"><a href="{{ get_external_link($post) }}" {{ is_external_link($post) ? 'target="_blank"' : '' }}>{{ $post->name }}</a></div>
+                                                                <div class="entry-meta meta-1 font-x-small color-grey d-flex">
+                                                                    <span class="post-on">{{ convert_date_to_ru($post->created_at->format('j.m.Y, H:m')) }}</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="post-thumb img-hover-scale another_posts_section">
+                                                                <a href="{{ get_external_link($post) }}" {{ is_external_link($post) ? 'target="_blank"' : '' }}>
+                                                                    <img
+                                                                            src="{{ RvMedia::getImageUrl($post->image, 'medium_large', false, RvMedia::getDefaultImage()) }}"
+                                                                    alt="{{ $post->name }}">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
             </div>
 
-            <div class="col-lg-4 col-md-12 col-sm-12 primary-sidebar sticky-sidebar">
+
+
+                    @if($singleLayout != 'inline-center')
+
+            <div class="col-lg-5 col-md-12 col-sm-12 primary-sidebar sticky-sidebar">
                 <div class="widget-area pl-30">
-                    {!! dynamic_sidebar('primary_sidebar') !!}
+                    @php $relatedPosts = get_related_posts($post->id, 3); @endphp
+
+                    @if ($relatedPosts->count() > 0)
+                        {!! Theme::partial('components.single.related-posts', ['relatedPosts' => $relatedPosts ]) !!}
+                    @endif
                 </div>
             </div>
         </div>
+
+            @endif
 
 {{--        @if(theme_option('recently_viewed_posts_enable', 'yes') == 'yes')--}}
 {{--            <div class="row recently-viewed-posts">--}}

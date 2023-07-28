@@ -4,7 +4,7 @@
         'telegram' => Theme::asset()->url('images/telegram-white.svg')
     ]
 @endphp
-<!--Widget social-->
+        <!--Widget social-->
 <div class="sidebar-widget widget-social-network">
     @php
         $socials = [];
@@ -17,12 +17,12 @@
     <div class="social-network">
         @foreach ($socials as $socialLink)
             @php $socialIcon = strtolower($socialLink[1]['value']) @endphp
-                <a class="follow-us-{{ $socialIcon }} clearfix"
-                   href="{{ $socialLink[2]['value'] }}" target="_blank">
-                    <div class="social-icon">
-                        <i class="ti-{{ $socialIcon }} mr-5 v-align-space"></i>
-                    </div>
-                </a>
+            <a class="follow-us-{{ $socialIcon }} clearfix"
+               href="{{ $socialLink[2]['value'] }}" target="_blank">
+                <div class="social-icon">
+                    <i class="ti-{{ $socialIcon }} mr-5 v-align-space"></i>
+                </div>
+            </a>
 
         @endforeach
     </div>

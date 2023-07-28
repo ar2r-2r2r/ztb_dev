@@ -23,6 +23,7 @@ class Contact extends BaseModel
         'subject',
         'content',
         'status',
+        'source_url'
     ];
 
     protected $casts = [
@@ -31,6 +32,7 @@ class Contact extends BaseModel
         'address' => SafeContent::class,
         'subject' => SafeContent::class,
         'content' => SafeContent::class,
+        'source_url'=>SafeContent::class,
     ];
 
     public function replies(): HasMany

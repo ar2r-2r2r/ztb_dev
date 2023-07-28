@@ -29,6 +29,15 @@
     </select>
 </div>
 
+
+<div class="tab-filter tab-categories tab-featured tab-recent tab-posts-collection">
+    <div class="form-group mb-3">
+        <label class="control-label">{{ __('Limit') }}</label>
+        <input type="number" name="limit" value="{{ Arr::get($attributes, 'limit', 4) }}" class="form-control"/>
+    </div>
+</div>
+
+
 <div class="tab-filter tab-categories">
     <div class="form-group mb-3">
         <label class="control-label">{{ __('Get posts from Categories') }}</label>
@@ -40,13 +49,6 @@
                 </option>
             @endforeach
         </select>
-    </div>
-</div>
-
-<div class="tab-filter tab-categories tab-featured tab-recent tab-posts-collection">
-    <div class="form-group mb-3">
-        <label class="control-label">{{ __('Limit') }}</label>
-        <input type="number" name="limit" value="{{ Arr::get($attributes, 'limit', 4) }}" class="form-control"/>
     </div>
 </div>
 
@@ -71,12 +73,13 @@
 </div>
 
 <div class="form-group mb-3">
-    <label class="control-label">{{ __('Style') }}</label>
-    <select name="style" class="form-control">
-        <option value="1" @if (Arr::get($attributes, 'style') == 1) selected @endif>{{ __('Style 1') }}</option>
-        <option value="2" @if (Arr::get($attributes, 'style') == 2) selected @endif>{{ __('Style 2') }}</option>
-        <option value="3" @if (Arr::get($attributes, 'style') == 3) selected @endif>{{ __('Style 3') }}</option>
-    </select>
+    <input name="show_follow_us_section" {{ Arr::get($attributes, 'show_follow_us_section', true) ? 'checked' : '' }} type="checkbox" value="1">
+    <label class="control-label">{{ __('Show Follow Us section') }}</label>
+</div>
+
+<div class="form-group mb-3">
+    <label class="control-label">{{ __('Ads location') }}</label>
+    {!! Form::select('ads_location', AdsManager::getLocations(), Arr::get($attributes, 'ads_location'), ['class' => 'form-control']) !!}
 </div>
 
 <script>

@@ -36,6 +36,11 @@ class PostForm extends FormAbstract
             $tags = implode(',', $tags);
         }
 
+        $views=null;
+        if($this->getModel()){
+            $views=$this->getModel()->views;
+        }
+
         if (! $this->formHelper->hasCustomField('categoryMulti')) {
             $this->formHelper->addCustomField('categoryMulti', CategoryMultiField::class);
         }
@@ -53,13 +58,14 @@ class PostForm extends FormAbstract
                     'data-counter' => 150,
                 ],
             ])
-            ->add('description', 'textarea', [
+            ->add('description', 'editor', [
                 'label' => trans('core/base::forms.description'),
                 'label_attr' => ['class' => 'control-label'],
                 'attr' => [
                     'rows' => 4,
                     'placeholder' => trans('core/base::forms.description_placeholder'),
                     'data-counter' => 400,
+                    'with-short-code' => true,
                 ],
             ])
             ->add('is_featured', 'onOff', [
@@ -99,6 +105,12 @@ class PostForm extends FormAbstract
                     'placeholder' => trans('plugins/blog::base.write_some_tags'),
                     'data-url' => route('tags.all'),
                 ],
+            ])
+            ->add('views', 'text',[
+                'label'=>'Просмотры',
+                'label_attr'=>['class'=>'control-label'],
+                'value'=>$views,
+                'default_value' => 0,
             ])
             ->setBreakFieldPoint('status');
 

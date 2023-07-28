@@ -36,6 +36,20 @@ class PublicController extends Controller
             ->render();
     }
 
+    public function getLiveSearch(Request $request, PostInterface $postRepository)
+    {
+        $query = BaseHelper::stringify($request->input('q'));
+
+        $title = __('Search result for: ":query"', compact('query'));
+
+        SeoHelper::setTitle($title)
+            ->setDescription($title);
+
+        $posts = $postRepository->getSearch($query, 0, 12);
+
+        return $posts;
+    }
+
     public function getTag(string $slug, BlogService $blogService)
     {
         $slug = SlugHelper::getSlug($slug, SlugHelper::getPrefix(Tag::class));

@@ -24,7 +24,6 @@ class Post extends BaseModel
 
     protected array $dontKeepRevisionOf = [
         'content',
-        'views',
     ];
 
     protected $fillable = [
@@ -37,6 +36,7 @@ class Post extends BaseModel
         'status',
         'author_id',
         'author_type',
+        'views',
     ];
 
     protected $casts = [

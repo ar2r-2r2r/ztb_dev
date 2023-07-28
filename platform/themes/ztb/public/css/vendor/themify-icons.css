@@ -1081,3 +1081,7 @@
 .ti-rss-alt:before {
 	content: "\e75f";
 }
+
+.ti-inst:before {
+	content: "\e757";
+}

@@ -12,29 +12,279 @@ app()->booted(function () {
 
     if (is_plugin_active('blog')) {
 
+        add_shortcode('suggest_post', __('suggest_post'), __('suggest_post'), function ($shortcode) {
+            return Theme::partial('shortcodes.ztb_custom.suggest_post');
+        });
+
+        add_shortcode('suggest_post_form', __('suggest_post_form'), __('suggest_post_form'), function ($shortcode) {
+            return Theme::partial('shortcodes.ztb_custom.suggest_post_form');
+        });
+
+
+
+
+        add_shortcode('L_post_var1_slider', __('L_post_var1 slider'), __('L Post var 1 slider'), function ($shortcode){
+            if (! is_plugin_active('post-collection')) {
+                return null;
+            }
+            $queryPosts = [];
+            $posts = [];
+            if ($shortcode->filter_by == 'posts-collection') {
+                $postCollection = app(PostCollectionInterface::class)
+                    ->findById($shortcode->posts_collection_id, [
+                        'posts' => function ($query) use ($shortcode) {
+                            return $query->limit(! empty($shortcode->limit) ? (int)$shortcode->limit : 6);
+                        },
+                        'posts.slugable',
+                    ]);
+                if (! empty($postCollection)) {
+                    $posts = $postCollection->posts;
+                }
+            } else {
+                switch ($shortcode->filter_by) {
+                    case 'featured':
+                        $queryPosts = [
+                            'featured' => 1,
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'categories':
+                        $queryPosts = [
+                            'categories' =>   $shortcode->categories_ids ?? '',
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'recent':
+                        $queryPosts = [
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'ids':
+                        $queryPosts = [
+                            'include' => $shortcode->include,
+                        ];
+
+                        break;
+                }
+                $posts = query_post($queryPosts);
+            }
+
+            $title = $shortcode->title ?? '';
+            $description = $shortcode->description ?? '';
+
+            return Theme::partial('shortcodes.ztb_custom.L_post_var1_slider', compact('posts','shortcode', 'title', 'description'));
+
+        });
+
+        shortcode()->setAdminConfig('L_post_var1_slider', function ($attributes) {
+            $postsCollections = app(PostCollectionInterface::class)->all();
+            $categories = get_categories();
+            return Theme::partial('shortcodes.ztb_custom.L_post_var1_slider-admin-config', compact('attributes', 'postsCollections', 'categories'));
+        });
+
         add_shortcode('L_post_var1', __('L_post_var1'), __('L Post var 1'), function ($shortcode){
-            $attributes = $shortcode->toArray();
-            $queryPosts = [
-                'categories' => $attributes['categories'] ?? '',
-                'categories_exclude' => $attributes['categories_exclude'] ?? '',
-                'include' => $attributes['include'] ?? '',
-                'exclude' => $attributes['exclude'] ?? '',
-                'limit' => $attributes['limit'] ? (int)$attributes['limit'] : 4,
-                'order_by' => $attributes['order_by'] ?? 'updated_at',
-                'order' => $attributes['order'] ?? 'desc',
-            ];
-            $title = $attributes['title'] ?? '';
-            $subtitle = $attributes['subtitle'] ?? '';
+            if (! is_plugin_active('post-collection')) {
+                return null;
+            }
+            $queryPosts = [];
+            $posts = [];
+            if ($shortcode->filter_by == 'posts-collection') {
+                $postCollection = app(PostCollectionInterface::class)
+                    ->findById($shortcode->posts_collection_id, [
+                        'posts' => function ($query) use ($shortcode) {
+                            return $query->limit(! empty($shortcode->limit) ? (int)$shortcode->limit : 6);
+                        },
+                        'posts.slugable',
+                    ]);
+                if (! empty($postCollection)) {
+                    $posts = $postCollection->posts;
+                }
+            } else {
+                switch ($shortcode->filter_by) {
+                    case 'featured':
+                        $queryPosts = [
+                            'featured' => 1,
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
 
-            $posts = query_post($queryPosts);
+                        break;
 
-            return Theme::partial('shortcodes.ztb_custom.L_post_var1', compact('posts', 'title', 'subtitle'));
+                    case 'categories':
+                        $queryPosts = [
+                            'categories' =>   $shortcode->categories_ids ?? '',
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'recent':
+                        $queryPosts = [
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'ids':
+                        $queryPosts = [
+                            'include' => $shortcode->include,
+                        ];
+
+                        break;
+                }
+                $posts = query_post($queryPosts);
+            }
+
+            $title = $shortcode->title ?? '';
+            $description = $shortcode->description ?? '';
+
+            return Theme::partial('shortcodes.ztb_custom.L_post_var1', compact('posts', 'title', 'description'));
 
         });
 
         shortcode()->setAdminConfig('L_post_var1', function ($attributes) {
-            return Theme::partial('shortcodes.ztb_custom.L_post_var1-admin-config', compact('attributes'));
+            $postsCollections = app(PostCollectionInterface::class)->all();
+            $categories = get_categories();
+            return Theme::partial('shortcodes.ztb_custom.L_post_var1-admin-config', compact('attributes', 'postsCollections', 'categories'));
         });
+
+
+        add_shortcode('Group_post_var1', __('Group_post_var1'), __('Group Post var 1'), function ($shortcode){
+            if (! is_plugin_active('post-collection')) {
+                return null;
+            }
+            $queryPosts = [];
+            $posts = [];
+            if ($shortcode->filter_by == 'posts-collection') {
+                $postCollection = app(PostCollectionInterface::class)
+                    ->findById($shortcode->posts_collection_id, [
+                        'posts' => function ($query) use ($shortcode) {
+                            return $query->limit(! empty($shortcode->limit) ? (int)$shortcode->limit : 6);
+                        },
+                        'posts.slugable',
+                    ]);
+                if (! empty($postCollection)) {
+                    $posts = $postCollection->posts;
+                }
+            } else {
+                switch ($shortcode->filter_by) {
+                    case 'featured':
+                        $queryPosts = [
+                            'featured' => 1,
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'categories':
+                        $queryPosts = [
+                            'categories' =>   $shortcode->categories_ids ?? '',
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'recent':
+                        $queryPosts = [
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'ids':
+                        $queryPosts = [
+                            'include' => $shortcode->include,
+                        ];
+
+                        break;
+                }
+                $posts = query_post($queryPosts);
+            }
+
+            $title = $shortcode->title ?? '';
+            $description = $shortcode->description ?? '';
+
+            return Theme::partial('shortcodes.ztb_custom.Group_post_var1', compact('posts', 'title', 'description'));
+
+        });
+
+        shortcode()->setAdminConfig('Group_post_var1', function ($attributes) {
+            $postsCollections = app(PostCollectionInterface::class)->all();
+            $categories = get_categories();
+            return Theme::partial('shortcodes.ztb_custom.Group_post_var1-admin-config', compact('attributes', 'postsCollections', 'categories'));
+        });
+
+
+        add_shortcode('M_post_var1', __('M_post_var1'), __('M Post var 1'), function ($shortcode){
+            if (! is_plugin_active('post-collection')) {
+                return null;
+            }
+            $queryPosts = [];
+            $posts = [];
+            if ($shortcode->filter_by == 'posts-collection') {
+                $postCollection = app(PostCollectionInterface::class)
+                    ->findById($shortcode->posts_collection_id, [
+                        'posts' => function ($query) use ($shortcode) {
+                            return $query->limit(! empty($shortcode->limit) ? (int)$shortcode->limit : 6);
+                        },
+                        'posts.slugable',
+                    ]);
+                if (! empty($postCollection)) {
+                    $posts = $postCollection->posts;
+                }
+            } else {
+                switch ($shortcode->filter_by) {
+                    case 'featured':
+                        $queryPosts = [
+                            'featured' => 1,
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'categories':
+                        $queryPosts = [
+                            'categories' =>   $shortcode->categories_ids ?? '',
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'recent':
+                        $queryPosts = [
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
+                    case 'ids':
+                        $queryPosts = [
+                            'include' => $shortcode->include,
+                        ];
+
+                        break;
+                }
+                $posts = query_post($queryPosts);
+            }
+
+            $title = $shortcode->title ?? '';
+            $description = $shortcode->description ?? '';
+
+            return Theme::partial('shortcodes.ztb_custom.M_post_var1', compact('posts', 'title', 'description'));
+
+        });
+
+        shortcode()->setAdminConfig('M_post_var1', function ($attributes) {
+            $postsCollections = app(PostCollectionInterface::class)->all();
+            $categories = get_categories();
+            return Theme::partial('shortcodes.ztb_custom.M_post_var1-admin-config', compact('attributes', 'postsCollections', 'categories'));
+        });
+
 
 
 
@@ -101,6 +351,14 @@ app()->booted(function () {
 
                         break;
 
+                    case 'categories':
+                        $queryPosts = [
+                            'categories' =>   $shortcode->categories_ids ?? '',
+                            'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
+                        ];
+
+                        break;
+
                     case 'recent':
                         $queryPosts = [
                             'limit' => $shortcode->limit ? (int)$shortcode->limit : 4,
@@ -127,8 +385,8 @@ app()->booted(function () {
 
         shortcode()->setAdminConfig('posts-slider', function ($attributes) {
             $postsCollections = app(PostCollectionInterface::class)->all();
-
-            return Theme::partial('shortcodes.posts-slider-admin-config', compact('attributes', 'postsCollections'));
+            $categories = get_categories();
+            return Theme::partial('shortcodes.posts-slider-admin-config', compact('attributes', 'postsCollections', 'categories'));
         });
 
         add_shortcode('popular-categories', __('Popular categories'), __('Popular categories'), function ($shortcode) {

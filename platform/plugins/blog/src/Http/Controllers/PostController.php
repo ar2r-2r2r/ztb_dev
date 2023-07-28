@@ -99,7 +99,6 @@ class PostController extends BaseController
         $post->fill($request->input());
 
         $this->postRepository->createOrUpdate($post);
-
         event(new UpdatedContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
 
         $tagService->execute($request, $post);

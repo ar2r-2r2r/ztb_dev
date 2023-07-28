@@ -61,6 +61,10 @@ Route::group(['namespace' => 'Botble\Blog\Http\Controllers', 'middleware' => ['w
                 'as' => 'public.search',
                 'uses' => 'PublicController@getSearch',
             ]);
+            Route::post('search', [
+                'as'=>'public.search',
+                'uses'=>'PublicController@getLiveSearch',
+            ]);
 
             if (SlugHelper::getPrefix(Tag::class, 'tag')) {
                 Route::get(SlugHelper::getPrefix(Tag::class, 'tag') . '/{slug}', [

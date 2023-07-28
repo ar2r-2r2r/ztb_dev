@@ -1,19 +1,19 @@
 <div class="container">
 
-    <div class="header-back-default">
-        <div class="back-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="5" height="12" viewBox="0 0 5 12" fill="#828792">
-                <path d="M5 0L5 10L4.37114e-07 5L5 0Z" fill="#828792"/>
-            </svg>
+        <div class="header-back-default">
+            <div class="back-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="5" height="12" viewBox="0 0 5 12" fill="#828792">
+                    <path d="M5 0L5 10L4.37114e-07 5L5 0Z" fill="#828792"/>
+                </svg>
+            </div>
+            <div class="back-item text">
+                <a href="" onclick="javascript:history.back();return false;">Назад</a>
+            </div>
         </div>
-        <div class="back-item text">
-            <a href="" onclick="javascript:history.back();return false;">Назад</a>
-        </div>
-    </div>
 
 
     <div class="row">
-         <div class="col-lg-12">
+        <div class="col-lg-7">
             <div class="header-default-item">
                 @php $category = $post->categories->first(); @endphp
                 @if ($category)
@@ -23,7 +23,7 @@
                         </a>
                     </div>
                 @endif
-                <div class="post-title-header-default" style="max-width: 100%;">
+                <div class="post-title-header-default">
                     <a href="{{ get_external_link($post) }}" {{ is_external_link($post) ? 'target="_blank"' : '' }}>{{ $post->name }}</a>
                 </div>
 
@@ -37,6 +37,15 @@
             </div>
         </div>
 
+        <div class="col-lg-5 pl-30">
+            <figure class="single-thumnail img-hover-slide mb-0 "
+                    style="background-image: url({{ RvMedia::getImageUrl($post->image) }})">
+            </figure>
+        </div>
+    </div>
+    <div class="line_end_header_post">
+        <hr>
+        <hr>
     </div>
 
 </div>

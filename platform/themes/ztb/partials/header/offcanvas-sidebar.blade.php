@@ -4,7 +4,7 @@
         {{--        <img class="icon" src="{{ Theme::asset()->url('images/theme/ztb_custom/material-symbols_menu-rounded.svg') }}" alt="dots icon">--}}
 {{--        <img class="icon" src="{{ Theme::asset()->url('images/theme/ztb_custom/material-symbols_menu-rounded.svg') }}" alt="dots icon">--}}
 
-        <svg class="icons_depends_theme" height="16" width="16"><use xlink:href="{{ Theme::asset()->url('images/theme/ztb_custom/icons.svg') }}#material-symbols_menu-rounded"></use></svg>
+        <svg class="icons_depends_theme" height="14" width="14"><use xlink:href="{{ Theme::asset()->url('images/theme/ztb_custom/icons.svg') }}#material-symbols_menu-rounded"></use></svg>
 
 
 

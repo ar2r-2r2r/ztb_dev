@@ -339,6 +339,8 @@ if (! function_exists('get_single_layout')) {
             'default' => __('Default'),
             'top-full' => __('Top full'),
             'inline' => __('Inline'),
+            'inline-full'=>__('Inline full'),
+            'inline-center'=>__('Inline center'),
         ];
     }
 }
@@ -359,7 +361,6 @@ if (! function_exists('display_ad')) {
         if (! is_plugin_active('ads') || empty($location)) {
             return '';
         }
-
         return AdsManager::display($location, $attributes);
     }
 }
@@ -415,6 +416,35 @@ if (! function_exists('post_date_format')) {
         }
 
         return theme_option('post_date_short_format', 'M d');
+    }
+}
+
+if (! function_exists('convert_date_to_ru')) {
+    function convert_date_to_ru($date):string
+    {
+        $_monthsList = array(
+            ".01" => "января, ",
+            ".02" => "февраля, ",
+            ".03" => "марта, ",
+            ".04" => "апреля, ",
+            ".05" => "мая, ",
+            ".06" => "июня, ",
+            ".07" => "июля, ",
+            ".08" => "августа, ",
+            ".09" => "сентября, ",
+            ".10" => "октября, ",
+            ".11" => "ноября, ",
+            ".12" => "декабря, "
+        );
+
+
+        $_mD = date(".m", strtotime($date)); //для замены
+        $date=date('j.m H:m');
+        $date=str_replace($_mD, " ".$_monthsList[$_mD]." ", $date);
+
+
+
+        return $date;
     }
 }
 

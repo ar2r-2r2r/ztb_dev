@@ -14,6 +14,7 @@ class ContactRequest extends Request
             'name' => 'required|string',
             'email' => 'required|email',
             'content' => 'required|string',
+            'source_link'=>'nullable|string',
             'phone' => 'nullable|' . BaseHelper::getPhoneValidationRule(),
         ];
 
@@ -35,6 +36,7 @@ class ContactRequest extends Request
             'email' => __('Email'),
             'phone' => __('Phone'),
             'content' => __('Content'),
+            'source_link'=>__('Source link')
         ] + (is_plugin_active('captcha') ? Captcha::attributes() : []);
     }
 }

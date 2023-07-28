@@ -68,5 +68,5 @@
 
     {!! Theme::partial('header.' . $headerStyle) !!}
 
-    {!! Theme::partial('components.search-form') !!}
+{{--    {!! Theme::partial('components.search-form') !!}--}}
 
